@@ -1,0 +1,67 @@
+{
+  "name": "huspy-translations",
+  "displayName": "Huspy Translations",
+  "description": "Extract text strings into ae and es common JSON files.",
+  "version": "1.0.0",
+  "engines": {
+    "vscode": "^1.71.0"
+  },
+  "publisher": "shahbazmancho",
+  "categories": [
+    "Programming Languages"
+  ],
+  "activationEvents": [
+    "onCommand:huspy-translations.extractForLang",
+    "workspaceContains:./package.json"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "huspy-translations.extractForLang",
+        "title": "Extract for translations"
+      }
+    ],
+    "menus": {
+      "editor/context": [
+        {
+          "command": "huspy-translations.extractForLang",
+          "group": "YourGroup@1"
+        }
+      ]
+    },
+    "keybindings": [
+      {
+        "command": "huspy-translations.extractForLang",
+        "key": "ctrl+t",
+        "mac": "ctrl+t",
+        "when": ""
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "yarn run compile",
+    "compile": "tsc -p ./",
+    "lint": "eslint src --ext ts",
+    "watch": "tsc -watch -p ./",
+    "pretest": "yarn run compile && yarn run lint",
+    "test": "node ./out/test/runTest.js"
+  },
+  "devDependencies": {
+    "@types/glob": "^8.0.0",
+    "@types/mocha": "^9.1.1",
+    "@types/node": "^18.7.18",
+    "@types/vscode": "^1.71.0",
+    "@typescript-eslint/eslint-plugin": "^5.37.0",
+    "@typescript-eslint/parser": "^5.37.0",
+    "eslint": "^8.23.1",
+    "glob": "^8.0.3",
+    "mocha": "^10.0.0",
+    "typescript": "^4.8.3",
+    "vscode-test": "^1.6.1"
+  },
+  "dependencies": {
+    "lodash.get": "^4.4.2",
+    "lodash.merge": "^4.6.2"
+  }
+}
