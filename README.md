@@ -8,11 +8,6 @@
 ## Common String (keys)
 
 All common string values like `Add`, `Remove`, `Cancel` have common usage across the pages. We have nameing conventions for these keys.
-It always start with `txt_{key_name}` where `{key_name}` can be `add`, `remove` and `cancel` for previous given examples.
-
-When you are asked to enter `Label`, if you want to use predefined `common keys` from JSON, enter `.` (dot) and press `Enter`. It will prefill the input box with found value, hit `Enter` again and it will reuse this same `key`. And if it doesn't find any predefined/existing key, it will ask you enter `Label`.
-
-> Note: It only works for `Common Keys` which start with `txt_` prefix.
 
 ## Quick Sneak Peek
 
