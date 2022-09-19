@@ -8,8 +8,14 @@
   },
   "publisher": "shahbazmancho",
   "categories": [
-    "Programming Languages"
+    "Programming Languages",
+    "Other"
   ],
+  "keywords": [
+    "huspy"
+  ],
+  "icon": "images/favicon.png",
+  "repository": "https://github.com/shahbazmancho/huspy-translations",
   "activationEvents": [
     "onCommand:huspy-translations.extractForLang",
     "workspaceContains:./package.json"
