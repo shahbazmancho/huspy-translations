@@ -28,3 +28,5 @@ From workspace root path to `/public/locales`.
 - [x] Supports extracting single line text.
 - [x] Supports extracting multines text.
 - [x] Replaces `tabs`, extra `spaces` and `newlines` from text strings.
+- [x] Tootltip when you hover key it show both translation values
+- [x] Tootltip when you hover over sizes it shows the conversion from px to rem and rem to px

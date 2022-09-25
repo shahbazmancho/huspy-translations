@@ -3,6 +3,21 @@ import * as path from "path";
 import { readJSONFile } from "./utils";
 var get = require("lodash.get");
 
+const getPxOrRemValue = (textBeingHovered: string) => {
+  const isPxOrRem = /(\d+)(px|rem)/g.test(textBeingHovered);
+  if (textBeingHovered.length < 5 && isPxOrRem) {
+    if (/rem/g.test(textBeingHovered)) {
+      const remValue = textBeingHovered.replace(/rem/g, "");
+      const pxValue = parseFloat(remValue) * 16;
+      return `${pxValue}px`;
+    } else if (/px/g.test(textBeingHovered)) {
+      const pxValue = textBeingHovered.replace(/px/g, "");
+      const remValue = parseFloat(pxValue) / 16;
+      return `${remValue}rem`;
+    }
+  }
+  return null;
+};
 export const hoverProviderDisposable = vscode.languages.registerHoverProvider(
   { pattern: "**/*.tsx" },
   {
@@ -11,12 +26,15 @@ export const hoverProviderDisposable = vscode.languages.registerHoverProvider(
       position: vscode.Position,
       token: vscode.CancellationToken
     ) {
-      let textBeingHovered: string = document.getText(
-        document.getWordRangeAtPosition(position, /t\([^)]*\)/i)
+      const extractedText: string = document.getText(
+        document.getWordRangeAtPosition(
+          position,
+          /t\(\"(.*)\"\)|(\d+)(px|rem)/g
+        )
       );
 
-      // just check if atleast text has one underscore, to narrow down the search
-      const transTextRegExp: RegExp = /t\([^)]*\)/i;
+      let textBeingHovered = extractedText;
+      const transTextRegExp: RegExp = /t\(\"(.*)\"\)|(\d+)(px|rem)/g;
       const shouldHover = transTextRegExp.test(textBeingHovered);
 
       //if t() not included in text then exclude
@@ -24,10 +42,15 @@ export const hoverProviderDisposable = vscode.languages.registerHoverProvider(
         return undefined;
       }
 
-      textBeingHovered = textBeingHovered
-        .replace('t("', "")
-        .replace('")', "")
-        .trim();
+      //removing t("") from text
+      textBeingHovered = textBeingHovered.replace(/t\(\"|\"\)/g, "");
+
+      const remOrPxVlaue = getPxOrRemValue(textBeingHovered);
+      if (remOrPxVlaue) {
+        const _marked: vscode.MarkdownString = new vscode.MarkdownString();
+        _marked.appendText(remOrPxVlaue);
+        return new vscode.Hover(_marked);
+      }
 
       const folderPath: string = vscode.workspace.rootPath as string;
       const langsPath: string = path.join(folderPath, "/public/locales");
